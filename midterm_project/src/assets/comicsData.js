@@ -10,6 +10,15 @@ const shuffleArray = (array) => {
 
 const comicsData = [
   {
+    title: 'Love Is War',
+    description: 'Description for Love Is War',
+    image: '/comics/Love_Is_War/kaguya.jpg',
+    timeframe: 'week',
+    tags: shuffleArray(['recommended', 'trending', 'new update']).slice(0, 2),
+    chapters: 12,
+    chapterPath: '/comics/Love_Is_War/chapters',
+  },
+  {
     title: '86',
     description: 'Description for 86',
     image: '/comics/86/86.jpg',

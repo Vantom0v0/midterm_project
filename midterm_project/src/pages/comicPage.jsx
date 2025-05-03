@@ -1,7 +1,16 @@
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import comicsData from '../assets/comicsData';
-import { Box, Typography, Card, CardMedia, List, ListItem, ListItemText, Button } from '@mui/material';
+import {
+  Box,
+  Typography,
+  Card,
+  CardMedia,
+  List,
+  ListItem,
+  ListItemText,
+  Button,
+} from '@mui/material';
 import ComicPageNavbar from '../components/comicPageNavbar';
 import Trending from '../components/trending';
 import Footer from '../components/footer';
@@ -13,7 +22,7 @@ function ComicPage() {
   const comic = comicsData.find((comic) => comic.title === decodedTitle);
 
   useEffect(() => {
-    window.scrollTo(0, 0); // Ensure the page starts at the top when loaded
+    window.scrollTo(0, 0);
   }, []);
 
   if (!comic) {
@@ -23,12 +32,16 @@ function ComicPage() {
   return (
     <>
       <ComicPageNavbar />
-      <Box sx={{ padding: 6, maxWidth: '1200px', margin: '0 auto', backgroundColor: '#3E5879', borderRadius: '8px', 
-        background: 'linear-gradient(to right, rgba(52, 58, 76, 0.6), rgba(0, 0, 0, 0))'
+      <Box sx={{
+        padding: 6,
+        maxWidth: '1200px',
+        margin: '0 auto',
+        background: 'linear-gradient(to right, rgba(52, 58, 76, 0.6), rgba(0, 0, 0, 0))',
+        borderRadius: '8px',
       }}>
         <Box
           sx={{
-            height: { xs: '0px', md: '400px' }, // Hide banner on small devices
+            height: { xs: '0px', md: '400px' },
             backgroundImage: { xs: 'none', md: `url(${comic.image})` },
             backgroundSize: 'cover',
             backgroundPosition: 'center',
@@ -37,22 +50,17 @@ function ComicPage() {
         />
 
         <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 12 }}>
+          {/* Left Panel */}
           <Box sx={{ flex: 1 }}>
             <Card sx={{ marginBottom: 4 }}>
               <CardMedia
                 component="img"
                 image={comic.image}
                 alt={comic.title}
-                sx={{
-                  height: { xs: 'auto', md: '700px' },
-                  width: { xs: '100%', md: '100%' }, // Ensure full width on large screens
-                  objectFit: 'cover',
-                }}
+                sx={{ height: { xs: 'auto', md: '700px' }, width: '100%', objectFit: 'cover' }}
               />
             </Card>
-            <Typography variant="h3" gutterBottom>
-              {comic.title}
-            </Typography>
+            <Typography variant="h3" gutterBottom>{comic.title}</Typography>
             <Typography variant="body1" paragraph sx={{ fontSize: '1.25rem' }}>
               {comic.description}
             </Typography>
@@ -73,40 +81,53 @@ function ComicPage() {
               ))}
             </Box>
             <Box sx={{ display: 'flex', gap: 3 }}>
-              <Button variant="contained" color="primary" size="large">
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                onClick={() =>
+                  navigate(`/chapter/${encodeURIComponent(comic.title)}/1`)
+                }
+              >
                 Read First Chapter
               </Button>
-              <Button variant="contained" color="primary" size="large">
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                onClick={() =>
+                  navigate(`/chapter/${encodeURIComponent(comic.title)}/${comic.chapters}`)
+                }
+              >
                 Read Latest Chapter
               </Button>
             </Box>
           </Box>
 
-          {/* Right Section */}
+          {/* Right Panel */}
           <Box sx={{ flex: 1 }}>
-            <Typography variant="h4" gutterBottom>
-              Chapters
-            </Typography>
-            <List sx={{ fontSize: '1.25rem', backgroundColor: '#EEEEEE', borderRadius: '8px' }}>
+            <Typography variant="h4" gutterBottom>Chapters</Typography>
+            <List sx={{ backgroundColor: '#EEEEEE', borderRadius: '8px' }}>
               {Array.from({ length: comic.chapters }, (_, index) => (
                 <ListItem
                   key={index}
                   button
-                  onClick={() => navigate(`/comic/${encodeURIComponent(comic.title)}/chapter/${index + 1}`)}
+                  onClick={() =>
+                    navigate(`/chapter/${encodeURIComponent(comic.title)}/${index + 1}`)
+                  }
                 >
-                  <ListItemText primary={`Chapter ${index + 1}`} sx={{ fontSize: '1.25rem' }} />
+                  <ListItemText primary={`Chapter ${index + 1}`} />
                 </ListItem>
               ))}
             </List>
-
           </Box>
         </Box>
       </Box>
-        {/* Trending Comics */}
-        <Box sx={{ marginTop: 4 }}>
-            <Trending />
-        </Box>
-        <Footer />
+
+      <Box sx={{ marginTop: 4 }}>
+        <Trending />
+      </Box>
+      <Footer />
     </>
   );
 }
