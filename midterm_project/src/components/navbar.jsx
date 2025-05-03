@@ -1,0 +1,203 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { AppBar, Toolbar, Typography, Button, Box } from '@mui/material';
+import { styled, alpha } from '@mui/material/styles';
+import InputBase from '@mui/material/InputBase';
+import SearchIcon from '@mui/icons-material/Search';
+import MenuIcon from '@mui/icons-material/Menu';
+import { IconButton, Menu, MenuItem } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import comicsData from '../assets/comicsData';
+
+const navItems = ['Recomendation', 'New Update', 'Trending', 'Contact'];
+const MAX_RESULTS = 5;
+
+export default function Navbar() {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const navigate = useNavigate();
+  const searchResultsRef = useRef(null);
+
+  const handleMenuOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleSearch = (event) => {
+    const query = event.target.value;
+    setSearchQuery(query);
+
+    if (query.trim() !== '') {
+      const results = comicsData.filter((comic) =>
+        comic.title.toLowerCase().includes(query.toLowerCase())
+      );
+      setSearchResults(results);
+    } else {
+      setSearchResults([]);
+    }
+  };
+
+  const handleClickOutside = (event) => {
+    if (searchResultsRef.current && !searchResultsRef.current.contains(event.target)) {
+      setSearchResults([]);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  return (
+    <AppBar position="sticky" color="primary" sx={{ mb: 2 }}>
+      <Toolbar sx={{ justifyContent: 'space-between' }}>
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{ flexGrow: 1, cursor: 'pointer', fontWeight: 'bold' }}
+          onClick={() => navigate('/')}
+        >
+          Comik
+        </Typography>
+
+        <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+          {navItems.map((item) => (
+            <Button
+              key={item}
+              color="inherit"
+              href={`#${item.toLowerCase()}`}
+              sx={{ textTransform: 'none' }}
+            >
+              {item}
+            </Button>
+          ))}
+        </Box>
+
+        <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            onClick={handleMenuOpen}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Menu
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={handleMenuClose}
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+          >
+            {navItems.map((item) => (
+              <MenuItem
+                key={item}
+                onClick={handleMenuClose}
+                component="a"
+                href={`#${item.toLowerCase()}`}
+                sx={{ color: 'black' }}
+              >
+                {item}
+              </MenuItem>
+            ))}
+          </Menu>
+        </Box>
+
+        <Search>
+          <SearchIconWrapper>
+            <SearchIcon />
+          </SearchIconWrapper>
+          <StyledInputBase
+            placeholder="Search…"
+            inputProps={{ 'aria-label': 'search' }}
+            value={searchQuery}
+            onChange={handleSearch}
+          />
+          {searchResults.length > 0 && (
+            <Box
+              ref={searchResultsRef}
+              sx={{
+                position: 'absolute',
+                backgroundColor: '#213555',
+                zIndex: 1,
+                width: '100%',
+                boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+                borderRadius: '4px',
+                marginTop: '8px',
+              }}
+            >
+              {searchResults.slice(0, MAX_RESULTS).map((result, index) => (
+                <Box
+                  key={index}
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '8px',
+                    borderBottom: index !== searchResults.length - 1 ? '1px solid #ccc' : 'none',
+                    cursor: 'pointer',
+                    '&:hover': {
+                      backgroundColor: '#3E5879',
+                    },
+                  }}
+                  onClick={() => navigate(`/comic/${encodeURIComponent(result.title)}`)}
+                >
+                  <img
+                    src={result.image}
+                    alt={result.title}
+                    style={{ width: '40px', height: '60px', objectFit: 'cover', marginRight: '10px' }}
+                  />
+                  {result.title}
+                </Box>
+              ))}
+            </Box>
+          )}
+        </Search>
+      </Toolbar>
+    </AppBar>
+  );
+}
+
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(1),
+    width: 'auto',
+  },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
+  },
+}));
