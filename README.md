@@ -27,6 +27,8 @@ cd midterm_projec
 
 npm install (or npm i)
 
+npm install @mui/material @emotion/react @emotion/styled @mui/icons-material
+
 ### 3. Start the development server
 
 npm start
