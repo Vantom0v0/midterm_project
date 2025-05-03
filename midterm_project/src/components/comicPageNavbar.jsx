@@ -64,7 +64,7 @@ function ComicPageNavbar() {
       color="primary"
       sx={{
         mb: 2,
-        opacity: isHovered || isTop ? 1 : 0.8, 
+        opacity: isHovered || isTop ? 1 : 0.1, 
         transition: 'opacity 0.3s ease-in-out',
       }}
       onMouseEnter={() => setIsHovered(true)}
