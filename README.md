@@ -7,7 +7,6 @@ A web-based comic reader built with **React**, **React Router**, and **Material-
 ## 🔧 Features
 
 - 📖 Browse multiple comics
-- 🖼️ View chapters with dynamic image loading
 - 🎯 Navigate through chapters easily
 - 🌟 Trending and tag-based organization
 - 🔄 Fully responsive design using Material UI
