@@ -41,12 +41,15 @@ The app will be available at http://localhost:3000
 <pre>
   src/
   ├── assets/
-  │   └── comicsData.js           # Comic metadata
-  │   └── pagesPerChapter.json    # Page count for each chapter
+  │   └── comicsData.js
+  │   └── pagesPerChapter.json
   ├── components/
-  │   └── ComicPageNavbar.jsx
-  │   └── Trending.jsx
-  │   └── Footer.jsx
+  │   └── comicPageNavbar.jsx
+  │   └── trending.jsx
+  │   └── footer.jsx
+  │   └── recommendation.js
+  │   └── newlyUpdated.js
+  │   └── navBar.js
   ├── pages/
   │   └── homepage.jsx
   │   └── comicPage.jsx
