@@ -29,9 +29,11 @@ npm install (or npm i)
 
 npm install @mui/material @emotion/react @emotion/styled @mui/icons-material
 
+npm audit fix (if there are any vulnerabilities)
+
 ### 3. Start the development server
 
-npm start
+npm run dev
 
 The app will be available at http://localhost:3000
 
