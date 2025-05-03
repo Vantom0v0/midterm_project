@@ -20,6 +20,7 @@ To run this project locally:
 ### 1. Clone the repository
 
 git clone https://github.com/Vantom0v0/midterm_project.git
+
 cd midterm_projec
 
 ### 2. Install dependencies
