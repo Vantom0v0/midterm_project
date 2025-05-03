@@ -76,8 +76,19 @@ Material-UI
 ## 👥 Contributors
 This project was developed by the following students as part of their coursework:
 
-- Vantom0v0 (Student ID: 523K0039)
+- Group 14
+- Course: Web Programming & Applications
 
-- Haune (Student ID: 523K0038)
+---
 
-- Huin (Student ID: 523K0041)
+- Vantom0v0:
+  - Full name: Huỳnh Lê Huy Hiển 
+  - Student ID: 523K0039
+
+- Haune:
+  -  Full name: Nguyễn Trung Hậu
+  -  Student ID: 523K0038
+
+- Huin:
+  - Full name: Châu Gia Huy
+  - Student ID: 523K0041
