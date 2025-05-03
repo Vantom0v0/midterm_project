@@ -7,7 +7,6 @@ A web-based comic reader built with **React**, **React Router**, and **Material-
 ## 🔧 Features
 
 - 📖 Browse multiple comics
-- 🖼️ View chapters with dynamic image loading
 - 🎯 Navigate through chapters easily
 - 🌟 Trending and tag-based organization
 - 🔄 Fully responsive design using Material UI
@@ -21,7 +20,8 @@ To run this project locally:
 ### 1. Clone the repository
 
 git clone https://github.com/Vantom0v0/midterm_project.git
-cd midterm_projec
+
+cd midterm_project
 
 ### 2. Install dependencies
 
@@ -29,22 +29,27 @@ npm install (or npm i)
 
 npm install @mui/material @emotion/react @emotion/styled @mui/icons-material
 
+npm audit fix (if there are any vulnerabilities)
+
 ### 3. Start the development server
 
-npm start
+npm run dev
 
-The app will be available at http://localhost:3000
+The app will be available at your localhost
 
 ## 📁 Project Structure
 <pre>
   src/
   ├── assets/
-  │   └── comicsData.js           # Comic metadata
-  │   └── pagesPerChapter.json    # Page count for each chapter
+  │   └── comicsData.js
+  │   └── pagesPerChapter.json
   ├── components/
-  │   └── ComicPageNavbar.jsx
-  │   └── Trending.jsx
-  │   └── Footer.jsx
+  │   └── comicPageNavbar.jsx
+  │   └── trending.jsx
+  │   └── footer.jsx
+  │   └── recommendation.js
+  │   └── newlyUpdated.js
+  │   └── navBar.js
   ├── pages/
   │   └── homepage.jsx
   │   └── comicPage.jsx
@@ -71,8 +76,19 @@ Material-UI
 ## 👥 Contributors
 This project was developed by the following students as part of their coursework:
 
-- Vantom0v0 (Student ID: 523K0039)
+- Group 14
+- Course: Web Programming & Applications
 
-- Haune (Student ID: 523K0038)
+---
 
-- Huin (Student ID: 523K0041)
+- Vantom0v0:
+  - Full name: Huỳnh Lê Huy Hiển 
+  - Student ID: 523K0039
+
+- Haune:
+  -  Full name: Nguyễn Trung Hậu
+  -  Student ID: 523K0038
+
+- Huin:
+  - Full name: Châu Gia Huy
+  - Student ID: 523K0041
