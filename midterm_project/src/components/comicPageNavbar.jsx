@@ -11,6 +11,8 @@ const MAX_RESULTS = 5;
 function ComicPageNavbar() {
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [isTop, setIsTop] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
   const searchResultsRef = useRef(null);
 
@@ -42,11 +44,32 @@ function ComicPageNavbar() {
   }, []);
 
   useEffect(() => {
+    const handleScroll = () => {
+      setIsTop(window.scrollY === 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
     console.log('Search Results:', searchResults);
   }, [searchResults]);
 
   return (
-    <AppBar position="sticky" color="primary" sx={{ mb: 2 }}>
+    <AppBar
+      position="sticky"
+      color="primary"
+      sx={{
+        mb: 2,
+        opacity: isHovered || isTop ? 1 : 0.8, 
+        transition: 'opacity 0.3s ease-in-out',
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <Toolbar sx={{ justifyContent: 'space-between' }}>
         <Typography
           variant="h6"

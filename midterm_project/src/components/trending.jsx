@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import comicsData from '../assets/comicsData';
 import { useNavigate } from 'react-router-dom';
 
@@ -22,7 +22,7 @@ const Trending = () => {
     };
 
     const handleComicClick = (comicTitle) => {
-        window.scrollTo(0, 0); // Ensure the page starts at the top when navigating
+        window.scrollTo(0, 0);
         navigate(`/comic/${encodeURIComponent(comicTitle)}`);
     };
 
@@ -33,12 +33,12 @@ const Trending = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 height: '100vh',
-                background: 'linear-gradient(to bottom, rgba(61, 144, 215, 1), rgba(61, 144, 215, 0))', // Add fade effect
+                background: 'linear-gradient(to bottom, rgba(61, 144, 215, 1), rgba(61, 144, 215, 0))',
             }}
         >
             <Box sx={{ width: '90%', textAlign: 'center' }}>
-                <Typography variant="h4" color="white" gutterBottom>
-                    Trending Comics
+                <Typography variant="h4" color="white" gutterBottom sx={{ fontWeight: 'bold', marginBottom: 4 }}>
+                    TRENDING COMICS
                 </Typography>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                     <Box>
@@ -48,27 +48,50 @@ const Trending = () => {
                             navigation
                             pagination={{ clickable: true }}
                             loop={true}
-                            modules={[Navigation, Pagination]}
+                            modules={[Navigation, Pagination, Autoplay]}
+                            autoplay={{
+                                delay: 0,
+                                disableOnInteraction: false,
+                                pauseOnMouseEnter: true,
+                            }}
+                            speed={5000}
                         >
                             {trendingComics.slice(0, Math.ceil(trendingComics.length / 2)).map((comic, index) => (
                                 <SwiperSlide key={index}>
                                     <Box
                                         sx={{
-                                            backgroundColor: 'white',
-                                            height: '200px',
-                                            margin: '10px',
                                             display: 'flex',
-                                            flexDirection: 'column',
+                                            flexDirection: { xs: 'column', sm: 'row' },
                                             alignItems: 'center',
-                                            justifyContent: 'center',
+                                            justifyContent: 'flex-start',
+                                            gap: '20px',
+                                            padding: '10px',
+                                            backgroundColor: 'white',
+                                            height: { xs: 'auto', sm: '250px' },
                                             cursor: 'pointer',
                                         }}
                                         onClick={() => handleComicClick(comic.title)}
                                     >
                                         {comic.image && (
-                                            <img src={comic.image} alt={comic.title} style={{ width: '100px', height: '150px', objectFit: 'cover', marginBottom: '10px' }} />
+                                            <img
+                                                src={comic.image}
+                                                alt={comic.title}
+                                                style={{
+                                                    width: '150px',
+                                                    height: '200px',
+                                                    objectFit: 'cover',
+                                                }}
+                                            />
                                         )}
-                                        {comic.title}
+                                        <Typography
+                                            variant="h6"
+                                            sx={{
+                                                fontWeight: 'bold',
+                                                textAlign: { xs: 'center', sm: 'left' },
+                                            }}
+                                        >
+                                            {comic.title}
+                                        </Typography>
                                     </Box>
                                 </SwiperSlide>
                             ))}
@@ -81,27 +104,50 @@ const Trending = () => {
                             navigation
                             pagination={{ clickable: true }}
                             loop={true}
-                            modules={[Navigation, Pagination]}
+                            modules={[Navigation, Pagination, Autoplay]}
+                            autoplay={{
+                                delay: 0,
+                                disableOnInteraction: false,
+                                pauseOnMouseEnter: true,
+                            }}
+                            speed={5000}
                         >
                             {trendingComics.slice(Math.ceil(trendingComics.length / 2)).map((comic, index) => (
                                 <SwiperSlide key={index}>
                                     <Box
                                         sx={{
-                                            backgroundColor: 'white',
-                                            height: '200px',
-                                            margin: '10px',
                                             display: 'flex',
-                                            flexDirection: 'column',
+                                            flexDirection: { xs: 'column', sm: 'row' }, 
                                             alignItems: 'center',
-                                            justifyContent: 'center',
+                                            justifyContent: 'flex-start',
+                                            gap: '20px',
+                                            padding: '10px',
+                                            backgroundColor: 'white',
+                                            height: { xs: 'auto', sm: '250px' },
                                             cursor: 'pointer',
                                         }}
                                         onClick={() => handleComicClick(comic.title)}
                                     >
                                         {comic.image && (
-                                            <img src={comic.image} alt={comic.title} style={{ width: '100px', height: '150px', objectFit: 'cover', marginBottom: '10px' }} />
+                                            <img
+                                                src={comic.image}
+                                                alt={comic.title}
+                                                style={{
+                                                    width: '150px',
+                                                    height: '200px',
+                                                    objectFit: 'cover',
+                                                }}
+                                            />
                                         )}
-                                        {comic.title}
+                                        <Typography
+                                            variant="h6"
+                                            sx={{
+                                                fontWeight: 'bold',
+                                                textAlign: { xs: 'center', sm: 'left' }, 
+                                            }}
+                                        >
+                                            {comic.title}
+                                        </Typography>
                                     </Box>
                                 </SwiperSlide>
                             ))}

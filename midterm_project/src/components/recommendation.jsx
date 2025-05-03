@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import { Navigation, Pagination } from 'swiper/modules';
+import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { Box, Typography, Card, CardMedia, CardContent } from '@mui/material';
 import comicsData from '../assets/comicsData';
 import { useNavigate } from 'react-router-dom';
@@ -37,14 +37,15 @@ const recommendation = () => {
           margin: '0 auto',
         }}
       >
-        <Typography variant="h4" gutterBottom sx={{ textAlign: 'center', marginBottom: 4, color: 'white' }}>
-          Recommendations
+        <Typography variant="h4" gutterBottom sx={{ textAlign: 'center', marginBottom: 4, color: 'white', fontWeight: 'bold' }}>
+          RECOMENDATIONS
         </Typography>
         <Swiper
-          modules={[Navigation, Pagination]}
+          modules={[Navigation, Pagination, Autoplay]}
           navigation
           loop={true}
           pagination={{ clickable: true }}
+          autoplay={{ delay: 3000, disableOnInteraction: false }}
           spaceBetween={10}
           slidesPerView={1}
           style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative' }}

@@ -15,6 +15,8 @@ export default function Navbar() {
   const [anchorEl, setAnchorEl] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [isTop, setIsTop] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
   const searchResultsRef = useRef(null);
 
@@ -53,8 +55,29 @@ export default function Navbar() {
     };
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsTop(window.scrollY === 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <AppBar position="sticky" color="primary" sx={{ mb: 2 }}>
+    <AppBar
+      position="sticky"
+      color="primary"
+      sx={{
+        mb: 2,
+        opacity: isHovered || isTop ? 1 : 0.6, 
+        transition: 'opacity 0.3s ease-in-out',
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       <Toolbar sx={{ justifyContent: 'space-between' }}>
         <Typography
           variant="h6"
@@ -192,7 +215,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create('width'),
     width: '100%',

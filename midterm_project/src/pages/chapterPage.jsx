@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import comicsData from '../assets/comicsData';
-import pagesPerChapterData from '../assets/pagesPerChapter'; // import the JSON file
+import pagesPerChapterData from '../assets/pagesPerChapter';
 import {
   Container,
   Typography,
@@ -12,6 +12,7 @@ import {
   Box,
   Card,
   CardMedia,
+  Button,
 } from '@mui/material';
 import Footer from '../components/footer';
 import Trending from '../components/trending';
@@ -72,6 +73,14 @@ const ChapterPage = () => {
             ))}
           </Select>
         </FormControl>
+        <Button
+          variant="contained"
+          color="secondary"
+          size="large"
+          onClick={() => navigate(`/comic/${encodeURIComponent(comic.title)}`)}
+        >
+          Return to Manga Page
+        </Button>
 
         <Box display="flex" flexDirection="column" gap={2}>
           {pages.map((url, index) => (
@@ -85,6 +94,32 @@ const ChapterPage = () => {
             </Card>
           ))}
         </Box>
+
+        <Button
+          variant="contained"
+          color="secondary"
+          size="large"
+          onClick={() => navigate(`/comic/${encodeURIComponent(comic.title)}`)}
+          sx={{ marginBottom: 2 }}
+        >
+          Return to Manga Page
+        </Button>
+
+        <FormControl fullWidth sx={{ mb: 4 }}>
+          <InputLabel>Select Chapter</InputLabel>
+          <Select
+            value={selectedChapter}
+            onChange={handleChapterChange}
+            label="Select Chapter"
+          >
+            {sortedChapterKeys.map((chapter) => (
+              <MenuItem key={chapter} value={chapter}>
+                Chapter {chapter}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
       </Container>
       <Trending />
       <Footer />

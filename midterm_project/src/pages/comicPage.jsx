@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import comicsData from '../assets/comicsData';
+import pagesPerChapter from '../assets/pagesPerChapter';
 import {
   Box,
   Typography,
@@ -28,6 +29,10 @@ function ComicPage() {
   if (!comic) {
     return <Typography variant="h4">Comic not found</Typography>;
   }
+
+  const sortedChapterKeys = Object.keys(pagesPerChapter[comic.title]).sort(
+    (a, b) => parseFloat(a) - parseFloat(b)
+  );
 
   return (
     <>
@@ -86,20 +91,20 @@ function ComicPage() {
                 color="primary"
                 size="large"
                 onClick={() =>
-                  navigate(`/chapter/${encodeURIComponent(comic.title)}/1`)
+                  navigate(`/chapter/${encodeURIComponent(comic.title)}/${sortedChapterKeys[0]}`)
                 }
               >
-                Read First Chapter
+                Read First
               </Button>
               <Button
                 variant="contained"
                 color="primary"
                 size="large"
                 onClick={() =>
-                  navigate(`/chapter/${encodeURIComponent(comic.title)}/${comic.chapters}`)
+                  navigate(`/chapter/${encodeURIComponent(comic.title)}/${sortedChapterKeys[sortedChapterKeys.length - 1]}`)
                 }
               >
-                Read Latest Chapter
+                Read Latest
               </Button>
             </Box>
           </Box>
@@ -107,19 +112,20 @@ function ComicPage() {
           {/* Right Panel */}
           <Box sx={{ flex: 1 }}>
             <Typography variant="h4" gutterBottom>Chapters</Typography>
-            <List sx={{ backgroundColor: '#EEEEEE', borderRadius: '8px' }}>
-              {Array.from({ length: comic.chapters }, (_, index) => (
-                <ListItem
-                  key={index}
-                  button
+            <Box sx={{ maxHeight: '400px', overflowY: 'auto', mb: 4 }}>
+              {sortedChapterKeys.map((chapter) => (
+                <Typography
+                  key={chapter}
+                  variant="body1"
+                  sx={{ padding: '8px 0', cursor: 'pointer' }}
                   onClick={() =>
-                    navigate(`/chapter/${encodeURIComponent(comic.title)}/${index + 1}`)
+                    navigate(`/chapter/${encodeURIComponent(comic.title)}/${encodeURIComponent(chapter)}`)
                   }
                 >
-                  <ListItemText primary={`Chapter ${index + 1}`} />
-                </ListItem>
+                  Chapter {chapter}
+                </Typography>
               ))}
-            </List>
+            </Box>
           </Box>
         </Box>
       </Box>

@@ -18,7 +18,7 @@ const Footer = () => {
                     Chính sách bảo mật
                 </Typography>
                 <Typography variant="body2" sx={{ marginTop: '20px' }}>
-                    © 2023 - Comik.net
+                    © 2025 - Comik
                 </Typography>
             </Box>
         </Box>
